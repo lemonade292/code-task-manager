@@ -1,0 +1,11 @@
+@import './styles/config';
+
+* {
+    margin:0;
+    padding:0;
+}
+
+.App {
+    font-family: $default-font;
+    color: $warm-dark;
+}

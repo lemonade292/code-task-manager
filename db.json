@@ -1,0 +1,12 @@
+{
+  "tasks": [
+    {
+      "id": "1",
+      "title": "A new tasks",
+      "description": "Hell yeah",
+      "status": "NOT_STARTED",
+      "created_at": "2023-09-08T00:12:14Z",
+      "deadline": "2023-09-18T00:12:14Z"
+    }
+  ]
+}

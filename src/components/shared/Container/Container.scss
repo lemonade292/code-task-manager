@@ -1,0 +1,9 @@
+@import '../../../styles/config.scss';
+
+.Container {
+    box-sizing: border-box;
+    box-shadow: $default-box-shadow;
+    background-color: $white;
+    padding:  $spacing-l;
+    border-radius: $default-border-radius;
+}
