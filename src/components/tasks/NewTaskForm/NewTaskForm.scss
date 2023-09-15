@@ -1,12 +1,12 @@
 @import '../../../styles/config.scss';
 
-.TaskItem{
+.NewTaskForm {
     box-sizing: border-box;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
 
-    & > * {
+    input, button {
         padding: $spacing-m;
+        margin: $spacing-m;
     }
 }

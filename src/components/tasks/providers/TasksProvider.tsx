@@ -5,15 +5,39 @@ import React, {
   useState,
   PropsWithChildren,
 } from "react";
-import { Task } from "../../../api/tasks/types";
-import { useLoading } from "../../shared/LoadingProvider/LoadingProvider";
+
+/* Types */
+import { Task, TaskStatus } from "../../../api/tasks/types";
+
+/* Services */
 import { getAll } from "../../../api/tasks/getAll";
+import { create } from "../../../api/tasks/create";
+import { deleteTask } from "../../../api/tasks/delete";
+import { update } from "../../../api/tasks/update";
 
 interface TasksContent {
   tasks: Task[];
+  setTasks: (tasks: Task[]) => void;
+  handleCreateTask: () => Promise<void>;
+  handleDeleteTask: (taskID: string) => Promise<void>;
+  handleUpdateTask: () => Promise<void>;
+  handleUpdateTaskStatus: (
+    taskID: string,
+    taskStatus: TaskStatus
+  ) => Promise<void>;
+  states: {
+    loading: boolean;
+    setLoading: (load: boolean) => void;
+    title: string;
+    setTitle: (title: string) => void;
+    description: string;
+    setDescription: (description: string) => void;
+    deadline: string;
+    setDeadline: (deadline: string) => void;
+  };
 }
 
-const TasksContext = createContext<TasksContent>({ tasks: [] });
+const TasksContext = createContext<TasksContent>({} as TasksContent);
 
 /**
  * TODO: add doc
@@ -21,8 +45,16 @@ const TasksContext = createContext<TasksContent>({ tasks: [] });
  * @returns
  */
 export const TasksProvider: React.FC<PropsWithChildren> = ({ children }) => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [reloadCount, setReloadCount] = useState<number>(0);
+  
   const [tasks, setTasks] = useState<Task[]>([]);
-  const { setLoading, reloadCount } = useLoading();
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+
+  // States for creating a new task.
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [deadline, setDeadline] = useState<string>("");
 
   useEffect(() => {
     setLoading(true);
@@ -38,7 +70,96 @@ export const TasksProvider: React.FC<PropsWithChildren> = ({ children }) => {
       });
   }, [reloadCount]);
 
-  const value = { tasks };
+  const handleDeleteTask = async (taskID: string) => {
+    setLoading(true);
+    deleteTask(taskID)
+      .then(() => {
+        alert("Task successfully deleted!");
+      })
+      .catch((e: Error) => {
+        console.error(e.message);
+      })
+      .finally(() => {
+        setReloadCount(reloadCount + 1);
+        setLoading(false);
+      });
+  };
+
+  const handleUpdateTask = async () => {
+
+  };
+
+  const handleUpdateTaskStatus = async (taskID: string, status: TaskStatus) => {
+    const task = tasks.find((task: Task) => task.ID === taskID);
+    
+    if (task) {
+      setLoading(true);
+      task.status = status;
+      update(task)
+        .then(() => {
+          alert("Task status updated!");
+        })
+        .catch((e: Error) => {
+          console.error(e.message);
+        })
+        .finally(() => {
+          setReloadCount(reloadCount + 1);
+          setLoading(false);
+        });
+    }
+  };
+
+  const handleCreateTask = async () => {
+    setLoading(true);
+    const [deadlineDate, deadlineMonth, deadlineYear] = deadline.split("/");
+
+    const newTask = new Task({
+      id:
+        tasks.length === 0
+          ? "1"
+          : String(parseInt(tasks[tasks.length - 1].ID) + 1),
+      title,
+      description,
+      deadline: new Date(
+        parseInt(deadlineYear),
+        parseInt(deadlineMonth) - 1,
+        parseInt(deadlineDate)
+      ).toISOString(),
+      created_at: new Date().toISOString(),
+      status: TaskStatus.NotStarted,
+    });
+
+    create(newTask)
+      .then(() => {
+        alert("Task successfully created!");
+      })
+      .catch((e: Error) => {
+        console.error(e.message);
+      })
+      .finally(() => {
+        setLoading(false);
+        setReloadCount(reloadCount + 1);
+      });
+  };
+
+  const value = {
+    tasks,
+    setTasks,
+    handleCreateTask,
+    handleDeleteTask,
+    handleUpdateTask,
+    handleUpdateTaskStatus,
+    states: {
+      loading,
+      setLoading,
+      title,
+      setTitle,
+      description,
+      setDescription,
+      deadline,
+      setDeadline,
+    },
+  };
 
   return (
     <TasksContext.Provider value={value}>{children}</TasksContext.Provider>

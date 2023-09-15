@@ -1,16 +1,25 @@
-import React from 'react';
-import './TaskItem.scss';
-import { Task } from '../../../api/tasks/types';
+import React from "react";
+import "./TaskItem.scss";
+import { Task, TaskStatus } from "../../../api/tasks/types";
+import { useTasksProvider } from "../providers/TasksProvider";
 
 interface TaskItemProps {
-    task: Task;
+  task: Task;
 }
 
 /**
  * TODO: doc
- * @param param0 
- * @returns 
+ * @param param0
+ * @returns
  */
-export const TaskItem: React.FC<TaskItemProps> = ({task}) => {
-    return <div className='TaskItem' data-testid="TaskItem">{task.title}</div>
-}
+export const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
+  const { handleDeleteTask,handleUpdateTaskStatus } = useTasksProvider();
+
+  return (
+    <div className="TaskItem" data-testid="TaskItem">
+      <span>{task.title}</span>
+      <span onClick={() => handleUpdateTaskStatus(task.ID, TaskStatus.Ongoing)}>MOVE TO</span>
+      <span onClick={() => handleDeleteTask(task.ID)}>X</span>
+    </div>
+  );
+};

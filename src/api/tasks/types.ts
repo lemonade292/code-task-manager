@@ -15,7 +15,11 @@ export enum TaskStatus {
   Completed = "COMPLETED",
 }
 
-export class Task {
+interface ITask {
+  toAPI(): TaskFromAPI;
+}
+
+export class Task implements ITask {
   public readonly ID: string;
   public title: string;
   public description: string;
@@ -30,5 +34,16 @@ export class Task {
     this.status = taskFromAPI.status;
     this.createdAt = new EXDate(taskFromAPI.created_at);
     this.deadline = new EXDate(taskFromAPI.deadline);
+  }
+
+  public toAPI(): TaskFromAPI {
+    return {
+      id: this.ID,
+      created_at: this.createdAt.unfmt(),
+      deadline: this.deadline.unfmt(),
+      status: this.status,
+      description: this.description,
+      title: this.title,
+    }
   }
 }

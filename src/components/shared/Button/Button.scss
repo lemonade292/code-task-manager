@@ -1,0 +1,9 @@
+@import '../../../styles/config.scss';
+
+.Button {
+    box-sizing: border-box;
+
+    .PRIMARY {
+        color: $primary;
+    }
+}

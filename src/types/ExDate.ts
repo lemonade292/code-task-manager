@@ -1,23 +1,29 @@
 interface IEXDate {
   fmt(format: DateFormat): string;
+  unfmt(): string;
 }
 
 const INVALID_DATE = "Invalid Date";
 
-export type DateFormat = "DD/MM/YYYY - HH:mm" | "DD" | "MM" | "YYYY";
+export type DateFormat =
+  | "DD/MM/YYYY"
+  | "DD/MM/YYYY - HH:mm"
+  | "DD"
+  | "MM"
+  | "YYYY";
 
 /**
  * EXDate extends Date class with additional methods. "EX" stands for "extended".
  */
 export class EXDate implements IEXDate {
-    protected date: Date;
+  protected date: Date;
 
   constructor(ISODate: string) {
-      this.date = new Date(ISODate);
+    this.date = new Date(ISODate);
 
-      if (String(this.date) === INVALID_DATE) {
-          throw new Error("Invalid Date")
-      }
+    if (String(this.date) === INVALID_DATE) {
+      throw new Error("Invalid Date");
+    }
   }
 
   public fmt(format: DateFormat): string {
@@ -35,6 +41,8 @@ export class EXDate implements IEXDate {
         return month;
       case "YYYY":
         return year.toString();
+      case "DD/MM/YYYY":
+        return `${day}/${month}/${year}`;
       case "DD/MM/YYYY - HH:mm":
         return `${day}/${month}/${year} - ${hours}:${minutes}`;
       default:
@@ -50,5 +58,9 @@ export class EXDate implements IEXDate {
     }
 
     return numberStr;
+  }
+
+  public unfmt(): string {
+    return this.date.toISOString();
   }
 }

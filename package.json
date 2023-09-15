@@ -21,7 +21,8 @@
   "scripts": {
     "start:server": "json-server --watch db.json",
     "start:app": "react-scripts start",
-    "test": "react-scripts test"
+    "test": "react-scripts test",
+    "test:watch": "react-scripts test --watch"
   },
   "eslintConfig": {
     "extends": [
