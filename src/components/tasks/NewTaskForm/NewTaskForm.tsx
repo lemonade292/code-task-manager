@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./NewTaskForm.scss";
 import { Container } from "../../shared/Container/Container";
 import { useTasksProvider } from "../providers/TasksProvider";
 import { Task } from "../../../api/tasks/types";
 import { dateFormatter } from "../utils/dateFormatter";
 
-interface NewTaskFormProps {}
+interface NewTaskFormProps {
+  setisAddFormOpen:(bol: boolean)=> void
+}
 
-export const NewTaskForm: React.FC<NewTaskFormProps> = () => {
+export const NewTaskForm: React.FC<NewTaskFormProps> = ({setisAddFormOpen}) => {
   const {
     states: {
       title,
@@ -19,8 +21,16 @@ export const NewTaskForm: React.FC<NewTaskFormProps> = () => {
     },
     handleCreateTask,
   } = useTasksProvider();
+  useEffect(() => {
+    setTitle('')      
+      setDescription('')      
+      setDeadline('')
+  }, []);
 
   return (
+    <div className="AddFormOverlay" onClick={()=>setisAddFormOpen(false)}>   
+    <div onClick={(e)=> e.stopPropagation()
+    }>
     <Container>
       <form
         className="NewTaskForm"
@@ -28,6 +38,7 @@ export const NewTaskForm: React.FC<NewTaskFormProps> = () => {
         onSubmit={(e) => {
           e.preventDefault();
           handleCreateTask();
+          setisAddFormOpen(false);
         }}
       >
         <input
@@ -39,9 +50,9 @@ export const NewTaskForm: React.FC<NewTaskFormProps> = () => {
           value={title}
         />
 
-        <input
+        <textarea
           placeholder="What is the task about?"
-          type="text"
+          rows={4}
           onChange={({ target: { value } }) => {
             setDescription(value);
           }}
@@ -58,8 +69,10 @@ export const NewTaskForm: React.FC<NewTaskFormProps> = () => {
           value={deadline}
         />
 
-        <button type="submit">Submit</button>
+        <button type="submit" disabled={!title.length|| !description.length || !deadline.length}>Submit</button>
       </form>
     </Container>
+    </div>
+    </div>
   );
 };

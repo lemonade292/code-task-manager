@@ -8,4 +8,24 @@
 .App {
     font-family: $default-font;
     color: $warm-dark;
+    background-color: rgba(250,250,252,255);
 }
+
+
+
+ h2{
+    font-size: 22px;
+    font-weight: bold;
+    margin-left:$spacing-l;
+    
+ }
+
+ .Button.SECONDARY{    
+        border: none;
+        cursor: pointer;
+        background: transparent;
+        img{
+          width: 21px;
+          height: 21px;
+        }
+ }

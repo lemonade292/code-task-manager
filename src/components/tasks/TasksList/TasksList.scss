@@ -1,5 +1,23 @@
 @import '../../../styles/config.scss';
 
-.TasksList {
+.TaskListHeader{
     box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    
+        .Button.SECONDARY{
+            img{
+                width: 30px!important;
+                height: 30px!important;
+            }
+        }
+     
+    & > * {
+        padding: $spacing-m;
+        padding-right: $spacing-l;
+      }
+
+        
 }

@@ -25,6 +25,9 @@ interface TasksContent {
     taskID: string,
     taskStatus: TaskStatus
   ) => Promise<void>;
+  getStatusCount: (status:keyof typeof TaskStatus) => number;
+  statusFilter:keyof typeof TaskStatus | undefined;
+  setStatusFilter: (statusFilter:keyof typeof TaskStatus | undefined ) => void;
   states: {
     loading: boolean;
     setLoading: (load: boolean) => void;
@@ -47,14 +50,15 @@ const TasksContext = createContext<TasksContent>({} as TasksContent);
 export const TasksProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [reloadCount, setReloadCount] = useState<number>(0);
-  
+
+  const [statusFilter, setStatusFilter] = useState< keyof typeof TaskStatus | undefined>(undefined)
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
   // States for creating a new task.
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [deadline, setDeadline] = useState<string>("");
+
 
   useEffect(() => {
     setLoading(true);
@@ -88,16 +92,16 @@ export const TasksProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const handleUpdateTask = async () => {
 
   };
-
+  
   const handleUpdateTaskStatus = async (taskID: string, status: TaskStatus) => {
     const task = tasks.find((task: Task) => task.ID === taskID);
-    
+    //console.log(TaskStatus)
     if (task) {
       setLoading(true);
-      task.status = status;
+      task.status === TaskStatus.NotStarted ? task.status = TaskStatus.Ongoing : task.status === TaskStatus.Ongoing ? task.status = TaskStatus.Completed : task.status = TaskStatus.NotStarted ;
       update(task)
         .then(() => {
-          alert("Task status updated!");
+          console.log("Task status updated!");
         })
         .catch((e: Error) => {
           console.error(e.message);
@@ -141,6 +145,11 @@ export const TasksProvider: React.FC<PropsWithChildren> = ({ children }) => {
         setReloadCount(reloadCount + 1);
       });
   };
+  const getStatusCount = (status:keyof typeof TaskStatus) => {
+   const filteredTasks = tasks.filter(task => task.status === TaskStatus[status])
+   return filteredTasks.length
+
+  };
 
   const value = {
     tasks,
@@ -149,6 +158,9 @@ export const TasksProvider: React.FC<PropsWithChildren> = ({ children }) => {
     handleDeleteTask,
     handleUpdateTask,
     handleUpdateTaskStatus,
+    getStatusCount,
+    statusFilter,
+    setStatusFilter,
     states: {
       loading,
       setLoading,

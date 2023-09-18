@@ -1,12 +1,86 @@
-@import '../../../styles/config.scss';
+@import "../../../styles/config.scss";
 
-.TaskItem{
-    box-sizing: border-box;
+.TaskItem {
+  box-sizing: border-box;
+  .TaskTitle {
+    font-weight: bold;
+    
+}  
+.TaskCreatedDate{
+  @include for-phone-only {
+      display: none;
+    }
+}
+  .TaskOverview{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
-    & > * {
-        padding: $spacing-m;
+    border-top: 2px outset $grey;
+  div {
+    width: auto;
+    display: flex;
+    align-items: center;
+    margin-left: $spacing-xxs;
+    > *{
+        margin-right: $spacing-xs;
     }
+    .TaskStatus {
+      width: 8px;
+      height: 8px;
+      border: 1px solid $grey;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+    .ONGOING {
+      background-color: rgb(228, 145, 50);
+    }
+    .COMPLETED {
+      background-color: rgb(84, 201, 84);
+    }
+      
+    .TaskDueDate{
+      width: 180px;
+      @include for-phone-only {
+        width: 90px;
+      }
+      span{
+        @include for-phone-only {
+          display: none;
+        }
+      }
+    }
+
+    .TaskDropdownImg.rotated{
+      transform: rotate(-180deg);
+    }
+  }
+  }
+
+  
+
+  .TaskContent{
+    display: none;
+    border-top: 2px outset $grey;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.073);
+      p{
+        margin-left: 7px;
+      }
+      form{
+        width: 100%;
+      }
+  }
+  .TaskContent.SelectedTask{
+    display: flex;
+    
+  }
+
+  & > * {
+    padding: $spacing-m;
+  }
 }
+.TaskItem:last-child{
+    border-bottom: 2px inset $grey;
+  }
+  
+  

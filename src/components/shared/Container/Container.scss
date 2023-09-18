@@ -4,6 +4,7 @@
     box-sizing: border-box;
     box-shadow: $default-box-shadow;
     background-color: $white;
-    padding:  $spacing-l;
+    padding:  $spacing-l 0;
     border-radius: $default-border-radius;
+    margin: $spacing-xl;
 }

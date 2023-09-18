@@ -2,14 +2,14 @@ import React from "react";
 import "./App.scss";
 import { TasksProvider } from "./components/tasks/providers/TasksProvider";
 import { TasksList } from "./components/tasks/TasksList/TasksList";
-import { NewTaskForm } from "./components/tasks/NewTaskForm/NewTaskForm";
+import { Overview } from "./components/overview/Overview";
 
 function App() {
   return (
     <div className="App">
       <TasksProvider>
-        <TasksList />
-        <NewTaskForm />
+        <Overview/>
+        <TasksList />       
       </TasksProvider>
     </div>
   );
