@@ -3,33 +3,35 @@ $white: #ffffff;
 $warm-dark: #242424;
 $grey: #c9c9c9;
 $primary: green;
-$secondary: grey;
+$secondary: rgb(250, 250, 252);
 $danger: red;
 $default-box-shadow: 0px 0px 7px 4px rgb(236, 236, 236);
 
 // Spacings
- $spacing-xxxs: 2px;
- $spacing-xxs: 4px;
- $spacing-xs: 6px;
- $spacing-s: 8px;
- $spacing-m: 10px;
- $spacing-ml: 12px;
- $spacing-l: 16px;
- $spacing-xl: 20px;
- $spacing-xxl: 32px;
- $spacing-xxxl: 64px;
+$spacing-xxxs: 2px;
+$spacing-xxs: 4px;
+$spacing-xs: 6px;
+$spacing-s: 8px;
+$spacing-m: 10px;
+$spacing-ml: 12px;
+$spacing-l: 16px;
+$spacing-xl: 20px;
+$spacing-xxl: 32px;
+$spacing-xxxl: 64px;
 
- // Fonts
- $default-font: sans-serif; 
+// Fonts
+$default-font: sans-serif;
 
- // Misc
- $default-border-radius: 8px;
+// Misc
+$default-border-radius: 8px;
 
- @mixin for-phone-only {
-   @media (max-width: 599px) { @content; }
- }
- @mixin for-desktop-only {
-   @media (min-width: 600px) { @content; }
- }
- 
- 
+@mixin for-phone-only {
+  @media (max-width: 599px) {
+    @content;
+  }
+}
+@mixin for-desktop-only {
+  @media (min-width: 600px) {
+    @content;
+  }
+}

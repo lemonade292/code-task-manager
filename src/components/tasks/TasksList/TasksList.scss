@@ -1,23 +1,22 @@
-@import '../../../styles/config.scss';
+@import "../../../styles/config.scss";
 
-.TaskListHeader{
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    
-        .Button.SECONDARY{
-            img{
-                width: 30px!important;
-                height: 30px!important;
-            }
-        }
-     
-    & > * {
-        padding: $spacing-m;
-        padding-right: $spacing-l;
-      }
+.TaskListHeader {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 
-        
+  .Button.SECONDARY {
+    img {
+      width: 30px !important;
+      height: 30px !important;
+      margin-left: $spacing-l;
+    }
+  }
+
+  & > * {
+    padding: $spacing-m;
+    padding-right: $spacing-l;
+  }
 }

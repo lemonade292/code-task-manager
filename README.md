@@ -11,14 +11,27 @@ Make sure to globally install `json-server` on your machine and run the followin
 ```
 json-server --watch db.json
 ```
+### `Start the app`
+To run the server use the following commmand *first*
+```
+npm run start:server
+```
 
-### `npm start`
+Afterwards run the following command on a separate terminal
+
+```
+npm start:app
+```
+
+Both will open by default on PORT 3000 so select *yes* when it asks to open the app on a new port
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
+
+
 
 ### `npm test`
 

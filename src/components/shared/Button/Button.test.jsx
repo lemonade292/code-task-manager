@@ -30,12 +30,12 @@ describe("[Button]", () => {
 
   it("should trigger the onClick callback when clicking the button", () => {
     render(
-        <Button onClick={onClick} type={type}>
+      <Button onClick={onClick} type={type}>
         Click me
       </Button>
-    );   
+    );
     const button = screen.getByTestId("Button");
-    fireEvent.click(button)
-    expect(onClick).toHaveBeenCalled()
-  })
+    fireEvent.click(button);
+    expect(onClick).toHaveBeenCalled();
+  });
 });

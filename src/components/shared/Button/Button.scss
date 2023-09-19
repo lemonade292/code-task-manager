@@ -1,9 +1,10 @@
-@import '../../../styles/config.scss';
+@import "../../../styles/config.scss";
 
 .Button {
-    box-sizing: border-box;
-
-    .PRIMARY {
-        color: $primary;
-    }
+  box-sizing: border-box;
+}
+.SUBMIT {
+  align-self: center;
+  width: 60%;
+  max-width: 240px;
 }

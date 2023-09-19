@@ -8,8 +8,8 @@ function App() {
   return (
     <div className="App">
       <TasksProvider>
-        <Overview/>
-        <TasksList />       
+        <Overview />
+        <TasksList />
       </TasksProvider>
     </div>
   );

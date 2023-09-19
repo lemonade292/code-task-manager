@@ -2,7 +2,7 @@ import { Task, TaskStatus } from "../../../api/tasks/types";
 
 /**
  * initialNewTask initializes a new empty task when is about to be created.
- * @returns 
+ * @returns
  */
 export const initialNewTask = (): Task => {
   return new Task({
@@ -11,6 +11,6 @@ export const initialNewTask = (): Task => {
     title: "",
     description: "",
     deadline: new Date().toISOString(),
-    status: TaskStatus.NotStarted
+    status: TaskStatus.NotStarted,
   });
 };

@@ -1,0 +1,29 @@
+@import "../../../src/styles/config.scss";
+
+.OverviewItem {
+  width: calc(100% - $spacing-m);
+  max-width: 300px;
+  height: auto;
+  background-color: $secondary;
+  border-radius: $default-border-radius;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: $spacing-m;
+  cursor: pointer;
+  @include for-phone-only {
+    max-width: 450px;
+  }
+  .OverviewItemNumber {
+    font-size: 32px;
+    padding: $spacing-m $spacing-xxxs $spacing-xxxs;
+  }
+  .OverviewItemTitle {
+    font-size: 14px;
+    padding-bottom: $spacing-l;
+  }
+}
+
+.OverviewItem:hover {
+  background-color: rgb(240, 240, 240);
+}

@@ -25,9 +25,9 @@ interface TasksContent {
     taskID: string,
     taskStatus: TaskStatus
   ) => Promise<void>;
-  getStatusCount: (status:keyof typeof TaskStatus) => number;
-  statusFilter:keyof typeof TaskStatus | undefined;
-  setStatusFilter: (statusFilter:keyof typeof TaskStatus | undefined ) => void;
+  getStatusCount: (status: TaskStatus) => number;
+  statusFilter: TaskStatus | undefined;
+  setStatusFilter: (statusFilter: TaskStatus | undefined) => void;
   states: {
     loading: boolean;
     setLoading: (load: boolean) => void;
@@ -51,14 +51,15 @@ export const TasksProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [reloadCount, setReloadCount] = useState<number>(0);
 
-  const [statusFilter, setStatusFilter] = useState< keyof typeof TaskStatus | undefined>(undefined)
+  const [statusFilter, setStatusFilter] = useState<TaskStatus | undefined>(
+    undefined
+  );
   const [tasks, setTasks] = useState<Task[]>([]);
 
   // States for creating a new task.
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [deadline, setDeadline] = useState<string>("");
-
 
   useEffect(() => {
     setLoading(true);
@@ -89,16 +90,18 @@ export const TasksProvider: React.FC<PropsWithChildren> = ({ children }) => {
       });
   };
 
-  const handleUpdateTask = async () => {
+  const handleUpdateTask = async () => {};
 
-  };
-  
   const handleUpdateTaskStatus = async (taskID: string, status: TaskStatus) => {
     const task = tasks.find((task: Task) => task.ID === taskID);
     //console.log(TaskStatus)
     if (task) {
       setLoading(true);
-      task.status === TaskStatus.NotStarted ? task.status = TaskStatus.Ongoing : task.status === TaskStatus.Ongoing ? task.status = TaskStatus.Completed : task.status = TaskStatus.NotStarted ;
+      task.status === TaskStatus.NotStarted
+        ? (task.status = TaskStatus.Ongoing)
+        : task.status === TaskStatus.Ongoing
+        ? (task.status = TaskStatus.Completed)
+        : (task.status = TaskStatus.NotStarted);
       update(task)
         .then(() => {
           console.log("Task status updated!");
@@ -139,16 +142,16 @@ export const TasksProvider: React.FC<PropsWithChildren> = ({ children }) => {
       })
       .catch((e: Error) => {
         console.error(e.message);
+        debugger;
       })
       .finally(() => {
         setLoading(false);
         setReloadCount(reloadCount + 1);
       });
   };
-  const getStatusCount = (status:keyof typeof TaskStatus) => {
-   const filteredTasks = tasks.filter(task => task.status === TaskStatus[status])
-   return filteredTasks.length
-
+  const getStatusCount = (status: TaskStatus) => {
+    const filterTasks = tasks.filter((task) => task.status === status);
+    return filterTasks.length;
   };
 
   const value = {
