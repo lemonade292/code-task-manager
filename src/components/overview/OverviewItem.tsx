@@ -7,7 +7,7 @@ import { useTasksProvider } from "../tasks/providers/TasksProvider";
 interface OverviewItemProps {
   status: TaskStatus;
 }
-const OVERVIEW_ITEM_TITLES: Record<TaskStatus, string> = {
+ const OVERVIEW_ITEM_TITLES: Record<TaskStatus, string> = {
   [TaskStatus.NotStarted]: "Not Started",
   [TaskStatus.Ongoing]: "Ongoing",
   [TaskStatus.Completed]: "Completed",
@@ -23,12 +23,15 @@ export const OverviewItem: React.FC<OverviewItemProps> = ({ status }) => {
 
   return (
     <div
-      className="OverviewItem"
+      className={statusFilter === status
+        ? 'OverviewItem selected'
+        : 'OverviewItem'}
       onClick={() =>
         statusFilter === status
           ? setStatusFilter(undefined)
           : setStatusFilter(status)
       }
+      id={'OverviewItemStatus' + status}
     >
       <h3 className="OverviewItemNumber">{getStatusCount(status)}</h3>
       <p className="OverviewItemTitle">{OVERVIEW_ITEM_TITLES[status]}</p>

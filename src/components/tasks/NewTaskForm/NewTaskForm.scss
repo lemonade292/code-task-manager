@@ -9,6 +9,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1;
 }
 .NewTaskForm {
   width: 400px;
@@ -23,6 +24,7 @@
   textarea {
     padding: $spacing-m;
     margin: $spacing-m;
+    border-radius: $default-border-radius;
   }
   /* input:nth-child(2){
         height: 400px;

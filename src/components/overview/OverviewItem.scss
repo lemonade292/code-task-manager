@@ -1,7 +1,8 @@
 @import "../../../src/styles/config.scss";
 
 .OverviewItem {
-  width: calc(100% - $spacing-m);
+  cursor: pointer;
+  width: calc(33% - $spacing-m * 2);
   max-width: 300px;
   height: auto;
   background-color: $secondary;
@@ -10,9 +11,34 @@
   flex-direction: column;
   align-items: center;
   margin: $spacing-m;
-  cursor: pointer;
+
+  &#OverviewItemStatusONGOING {
+    background-color: rgba(228, 145, 50, 0.2);
+    &.selected{
+      border:1px solid rgb(228, 145, 50);
+    }
+  }
+  &#OverviewItemStatusNOT_STARTED {
+    background-color: $secondary;
+    &.selected{
+      border: 1px solid $grey;
+    }
+  }
+  &#OverviewItemStatusCOMPLETED {
+    background-color: rgb(84, 201, 84, 0.2);
+    &.selected{
+      border: 1px solid rgb(84, 201, 84);
+    }
+
+  }
+  
   @include for-phone-only {
     max-width: 450px;
+    width: calc(100% - $spacing-m * 2);
+  }
+
+  &:hover{
+    background-color: rgb(240, 240, 240);
   }
   .OverviewItemNumber {
     font-size: 32px;
@@ -24,6 +50,4 @@
   }
 }
 
-.OverviewItem:hover {
-  background-color: rgb(240, 240, 240);
-}
+

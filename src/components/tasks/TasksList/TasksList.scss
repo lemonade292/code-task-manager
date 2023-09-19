@@ -8,10 +8,17 @@
   align-items: center;
 
   .Button.SECONDARY {
+      margin-left: $spacing-l;
     img {
       width: 30px !important;
       height: 30px !important;
-      margin-left: $spacing-l;
+      position: relative;
+    }
+    .selected {
+      padding: 5px;
+      background-color: rgb(240, 240, 240);
+      margin: -5px;
+      border-radius: $default-border-radius;
     }
   }
 

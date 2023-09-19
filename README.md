@@ -11,6 +11,11 @@ Make sure to globally install `json-server` on your machine and run the followin
 ```
 json-server --watch db.json
 ```
+
+After that locally install the dependencies with
+```
+npm install
+```
 ### `Start the app`
 To run the server use the following commmand *first*
 ```

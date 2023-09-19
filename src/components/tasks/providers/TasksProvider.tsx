@@ -14,16 +14,21 @@ import { getAll } from "../../../api/tasks/getAll";
 import { create } from "../../../api/tasks/create";
 import { deleteTask } from "../../../api/tasks/delete";
 import { update } from "../../../api/tasks/update";
+import { toast } from "react-toastify";
 
 interface TasksContent {
   tasks: Task[];
   setTasks: (tasks: Task[]) => void;
   handleCreateTask: () => Promise<void>;
   handleDeleteTask: (taskID: string) => Promise<void>;
-  handleUpdateTask: () => Promise<void>;
+  handleUpdateTask: (
+    task: Task,
+    title: string,
+    description: string,
+    deadline: string
+  ) => Promise<void>;
   handleUpdateTaskStatus: (
-    taskID: string,
-    taskStatus: TaskStatus
+    taskID: string
   ) => Promise<void>;
   getStatusCount: (status: TaskStatus) => number;
   statusFilter: TaskStatus | undefined;
@@ -79,7 +84,7 @@ export const TasksProvider: React.FC<PropsWithChildren> = ({ children }) => {
     setLoading(true);
     deleteTask(taskID)
       .then(() => {
-        alert("Task successfully deleted!");
+        toast.error('Task deleted!')
       })
       .catch((e: Error) => {
         console.error(e.message);
@@ -90,11 +95,45 @@ export const TasksProvider: React.FC<PropsWithChildren> = ({ children }) => {
       });
   };
 
-  const handleUpdateTask = async () => {};
+  const handleUpdateTask = async (
+    task: Task,
+    title: string,
+    description: string,
+    deadline: string
+  ) => {
+    setLoading(true);
+    debugger;
+    const [deadlineDate, deadlineMonth, deadlineYear] = deadline.split("/");
 
-  const handleUpdateTaskStatus = async (taskID: string, status: TaskStatus) => {
+
+    const newTask = new Task({
+      id: task.ID,
+      title,
+      description,
+      deadline: new Date(
+        parseInt(deadlineYear),
+        parseInt(deadlineMonth) - 1,
+        parseInt(deadlineDate)
+      ).toISOString(),
+      created_at: task.createdAt.unfmt(),
+      status: task.status,
+    });
+
+    update(newTask)
+      .then(() => {
+        toast.success('Task successfully updated !')
+      })
+      .catch((e: Error) => {
+        console.error(e.message);
+      })
+      .finally(() => {
+        setLoading(false);
+        setReloadCount(reloadCount + 1);
+      });
+  };
+
+  const handleUpdateTaskStatus = async (taskID: string) => {
     const task = tasks.find((task: Task) => task.ID === taskID);
-    //console.log(TaskStatus)
     if (task) {
       setLoading(true);
       task.status === TaskStatus.NotStarted
@@ -138,11 +177,10 @@ export const TasksProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
     create(newTask)
       .then(() => {
-        alert("Task successfully created!");
+        toast.success('Task successfully created!')
       })
       .catch((e: Error) => {
         console.error(e.message);
-        debugger;
       })
       .finally(() => {
         setLoading(false);

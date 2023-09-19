@@ -23,19 +23,6 @@
       > * {
         margin-right: $spacing-xs;
       }
-      .TaskStatus {
-        width: 8px;
-        height: 8px;
-        border: 1px solid $grey;
-        cursor: pointer;
-        border-radius: 50%;
-      }
-      .ONGOING {
-        background-color: rgb(228, 145, 50);
-      }
-      .COMPLETED {
-        background-color: rgb(84, 201, 84);
-      }
 
       .TaskDueDate {
         width: 180px;
@@ -53,6 +40,28 @@
         transform: rotate(-180deg);
       }
     }
+    .DeleteIcon {
+      opacity: 0.5;
+    }
+    .StatusLabel {
+      width: 60px;
+      padding: $spacing-xxs;
+      font-size: 9px;
+      border-radius: 2px;
+      text-align: center;
+      cursor: pointer;
+      &.ONGOING {
+        background-color: rgba(228, 145, 50, 0.3);
+        color: rgb(228, 145, 50);
+      }
+      &.COMPLETED {
+        background-color: rgb(84, 201, 84, 0.3);
+        color: rgb(84, 201, 84);
+      }
+      &.NOT_STARTED {
+        background-color: $grey;
+      }
+    }
   }
 
   .TaskContent {
@@ -65,6 +74,14 @@
     }
     form {
       width: 100%;
+        input,textarea{
+          border:none;
+          border-radius: $default-border-radius;
+        }
+        button{
+          border-radius: $default-border-radius;
+          cursor: pointer;
+        }
     }
   }
   .TaskContent.SelectedTask {

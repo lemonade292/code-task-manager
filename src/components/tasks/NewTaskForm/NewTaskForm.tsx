@@ -73,6 +73,7 @@ export const NewTaskForm: React.FC<NewTaskFormProps> = ({
                 setDeadline(dateFormatter(value));
               }}
               value={deadline}
+              onBlur={({ target: { value } })  => setDeadline(dateFormatter(value.replace(/[^0-9/]+/g, '')))}
             />
             <Button
               type={ButtonTypes.Submit}
